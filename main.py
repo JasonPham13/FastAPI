@@ -4,7 +4,7 @@ from db_config import engine
 from repository import user_repository
 from sqlalchemy.orm import Session
 from db_config import get_db
-from router import app_router
+from router import app_router, users_router
 
 
 app = FastAPI(
@@ -14,6 +14,7 @@ app = FastAPI(
 )
 
 app.include_router(app_router.router)
+app.include_router(users_router.router)
 
 
 
