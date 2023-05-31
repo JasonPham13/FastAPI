@@ -1,6 +1,10 @@
 from fastapi import FastAPI, Response, status
 
-app = FastAPI()
+app = FastAPI(
+    title="Jason's-FastAPI",
+    description="This is the swagger spec for my FastApi",
+    version='1.0.0'
+)
 
 
 
