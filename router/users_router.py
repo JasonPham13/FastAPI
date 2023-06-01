@@ -17,7 +17,7 @@ def get_users(response: Response, db: Session = Depends(get_db)):
     return return_value
 
 
-@router.get("/username}", response_description="Displays user by username", description="Retrieves user by username", response_model=UserModel, responses={404: {"model": MessageModel}})
+@router.get("/{username}", response_description="Displays user by username", description="Retrieves user by username", response_model=UserModel, responses={404: {"model": MessageModel}})
 def get_by_username(username: str, response: Response, db: Session = Depends(get_db)):
     return_value = user_repository.get_by_username(db, username)
     
