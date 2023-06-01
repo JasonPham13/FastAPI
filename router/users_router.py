@@ -52,6 +52,6 @@ def add_user(request: CreateUserModel, response: Response, db: Session = Depends
     
     response.status_code = status.HTTP_201_CREATED
 
-    response.headers["Location"] = "users/v1/" + str(username_request.strip())
+    response.headers["location"] = "users/v1/" + str(username_request.strip())
 
     return user_repository.add_user(db, username_request.strip(), email_request.strip(), role_request.strip())
