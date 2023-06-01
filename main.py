@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI, Response, status, Depends
 from db import user_db
 from db_config import engine
@@ -15,6 +16,9 @@ app = FastAPI(
 
 app.include_router(app_router.router)
 app.include_router(users_router.router)
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="localhost", port=8000)
 
 
 
