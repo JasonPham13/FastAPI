@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 class UserModel (BaseModel):
@@ -18,6 +19,10 @@ class CreateUserModel(BaseModel):
     email: str
     role: str
 
-    
+class UpdateUserModel(BaseModel):
+    email: Optional[str]
+    role: Optional[str]
+
+
 class MessageModel(BaseModel):
     detail: str
