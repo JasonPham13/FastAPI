@@ -150,3 +150,51 @@ def test_tc_0004_post(client):
     assert get_response.json()["role"] == td_role
     assert get_response.json()["username"] == td_username
     assert get_response.json()["email"] == td_email
+
+def test_tc0005_post_empty_username(client):
+    td_username = ""
+    td_email = ""
+    td_role = ""
+    td_message = "username field cannot be empty. Please check your payload and try again."
+
+
+    response = client.post('/users/v1', data=json.dumps(dict(
+        username=td_username,
+        email=td_email,
+        role=td_role
+    )), content='application/json')
+
+    assert response.status_code == 400
+    assert response.json()["detail"] == td_message
+
+def test_tc0006_post_empty_email(client):
+    td_username = "johnny"
+    td_email = ""
+    td_role = "student"
+    td_message = "email field cannot be empty. Please check your payload and try again."
+
+
+    response = client.post('/users/v1', data=json.dumps(dict(
+        username=td_username,
+        email=td_email,
+        role=td_role
+    )), content='application/json')
+
+    assert response.status_code == 400
+    assert response.json()["detail"] == td_message
+
+def test_tc0007_post_empty_role(client):
+    td_username = 'bob'
+    td_email = "bob@gmail.com"
+    td_role = ""
+    td_message = "role field cannot be empty. Please check your payload and try again."
+
+    response = client.post('/users/v1', data=json.dumps(dict(
+        username=td_username,
+        email=td_email,
+        role=td_role
+    )), content='application/json')
+
+
+
+    
