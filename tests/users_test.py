@@ -196,5 +196,99 @@ def test_tc0007_post_empty_role(client):
     )), content='application/json')
 
 
+def test_tc0008_put(client):
+    td_id = 1
+    td_username = "darth.vader"
+    td_email = "test_@email"
+    td_role = "test_role"
+    td_payload = '{"email": "test_@email", "role": "test_role" }'
+
+    response = client.put('/users/v1/' + td_username, data=td_payload, content='application/json')
+
+    assert response.status_code == 204
+
+    get_response=client.get(f'/users/v1/{td_username}')
+    
+
+    assert get_response.json()["id"] == td_id
+    assert get_response.json()["username"] == td_username
+    assert get_response.json()["email"] == td_email
+    assert get_response.json()["role"] == td_role
+
+
+def test_tc0009_put_update_email(client):
+    td_id = 1
+    td_username = "darth.vader"
+    td_email = "test_@email"
+    td_role = "villian"
+    td_payload = '{ "email": "test_@email" }'
+
+    response = client.put('/users/v1/' + td_username, data=td_payload, content='application/json')
+
+    assert response.status_code == 204
+
+    get_response = client.get(f'/users/v1/{td_username}')
+
+    assert get_response.json()["id"] == td_id
+    assert get_response.json()["username"] == td_username
+    assert get_response.json()["email"] == td_email
+    assert get_response.json()["role"] == td_role
+
+
+def test_tc0010_put_update_role(client):
+    td_id = 1
+    td_username = "darth.vader"
+    td_email = "darth.vader@gmail.com"
+    td_role = "test"
+    td_payload = '{ "role": "test" }'
+
+    response = client.put('/users/v1/' + td_username, data=td_payload, content='application/json')
+
+    assert response.status_code == 204
+
+    get_response = client.get(f'/users/v1/{td_username}')
+
+    assert get_response.json()["id"] == td_id
+    assert get_response.json()["username"] == td_username
+    assert get_response.json()["email"] == td_email
+    assert get_response.json()["role"] == td_role
+
+def test_tc_0011_put_no_body(client):
+    td_username = "darth"
+    td_payload = "{}"
+    td_message = "request body cannot be empty. Please check your payload and try again."
+
+    response = client.put('/users/v1/' + td_username, data=td_payload, content='application/json')
+
+    assert response.status_code == 400
+    assert response.json()["detail"] == td_message
+
+
+def test_tc_0012_put_bad_username(client):
+    td_username= "this.not.found"
+    td_payload = '{ "email": "test_@email", "role": "test_role" }'
+    td_message = "Username not found. Please use Post to create a user record."
+
+    response = client.put('/users/v1/' + td_username, data=td_payload, content='application/json')
+
+    assert response.status_code == 404
+    assert response.json()["detail"] == td_message
+
+
+def test_tc_0013_put_empty_fields(client):
+    td_username = "darth.vader"
+    td_payload = '{"email": " ", "role" : " " }'
+    td_message = "request body fields cannot be empty. Please check your payload and try again."
+
+    response = client.put('/users/v1/' + td_username, data=td_payload, content='application/json')
+
+    assert response.status_code == 400
+    assert response.json()["detail"] == td_message
+
 
     
+
+
+
+
+
