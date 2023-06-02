@@ -286,6 +286,23 @@ def test_tc_0013_put_empty_fields(client):
     assert response.json()["detail"] == td_message
 
 
+    def test_tc0014_delete(client):
+        td_username = 'delete.test'
+        td_email = 'delete@gmail.com'
+        td_role = 'tester'
+
+
+        response = client.post('/users/v1', data=json.dumps(dict(
+            username=td_username, 
+            email=td_email,
+            role=td_role
+        )), content='application/json')
+
+        response = client.delete('/users/v1/' + td_username)
+
+        assert response.status_code == 204
+
+
     
 
 
