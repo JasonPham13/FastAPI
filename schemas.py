@@ -13,5 +13,11 @@ class UserModel (BaseModel):
         orm_mode = True
 
 
+class CreateUserModel(BaseModel):
+    username: str
+    email: str
+    role: str
+
+    
 class MessageModel(BaseModel):
     detail: str
